@@ -18,8 +18,9 @@ internal class NetModule(private val mBaseUrl: String) {
         var httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor = httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val headers = HashMap<String, String>()
-//        headers["Authorization"] =
-//            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzAsIm5hbWUiOiJ0ZXN0IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNTU3OTEwNDA5fQ.FA-Ky51i9LLhtuxeVzS1EHjmLdaeXtS1bQ76RIJTeQY"
+
+//        headers["Authorization"] ="Bearer"
+
         val headersInterceptor = HeadersInterceptor(headers)
 
         return OkHttpClient.Builder()

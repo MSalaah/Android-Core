@@ -73,7 +73,7 @@ open class BaseViewModel : ViewModel() {
     /**
      * this will restart all failed useCases.
      */
-    open fun restart() {
+    open fun retry() {
         executeAllFailedUseCases()
     }
 
