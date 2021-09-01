@@ -11,12 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
-
-
     private var loadingIndicator: Dialog? = null
     lateinit var viewModel: VM
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         val fragmentView = inflater.inflate(getContentLayout(), container, false)
 
@@ -41,7 +43,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     private fun initializeViewModel() {
         viewModel = ViewModelProviders.of(requireActivity()).get(injectViewModel())
     }
-
 
     /**
      * Method that return the layout file id
@@ -71,6 +72,11 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
      * Method responsible for ui actions
      */
     protected abstract fun initializeActions()
+
+    /**
+     * Method responsible to tell if the fragment is a top level fragment (tab fragment)
+     */
+    abstract fun isTopLevelFragment(): Boolean
 
     /**
      * Method responsible for observing api exceptions

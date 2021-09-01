@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentTransaction
 
 
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+
+        initToolbar(getCurrentToolBar())
+
+        handleBackButton()
     }
 
     /**
@@ -19,32 +24,59 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     protected abstract fun getFragmentPlaceHolder(): Int
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
+    protected abstract fun getCurrentToolBar(): Toolbar
 
-    fun navigateToFragment(nextFragment: BaseFragment<*>, tag: String, addToBackStack: Boolean) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-            .replace(getFragmentPlaceHolder(), nextFragment)
-        if (addToBackStack)
-            fragmentTransaction.addToBackStack(tag)
+    /**
+     * navigate to next fragment
+     *
+     * @param nextFragment
+     * @param previousFragmentTag
+     * @param addToBackStack
+     * @param fragmentTransition
+     * @param currentFragmentTag
+     **/
+    open fun navigateToFragment(
+        nextFragment: BaseFragment<*>, previousFragmentTag: String?,
+        addToBackStack: Boolean, fragmentTransition: Int, currentFragmentTag: String?
+    ) {
+        val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setTransition(fragmentTransition)
+        fragmentTransaction.replace(getFragmentPlaceHolder(), nextFragment, currentFragmentTag)
+        if (addToBackStack) fragmentTransaction.addToBackStack(previousFragmentTag)
         fragmentTransaction.commit()
     }
 
-    fun initToolbar(toolBar: Toolbar) {
+    private fun handleBackButton() {
+        val currentFragmentShownTag = getTopLevelFragmentTag()
+        val currentFragment =
+            supportFragmentManager.findFragmentByTag(currentFragmentShownTag) as BaseFragment<*>
+
+        if (currentFragment.isTopLevelFragment()) {
+            supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        } else {
+            supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        }
+    }
+
+    private fun getTopLevelFragmentTag(): String? {
+        return supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
+    }
+
+    private fun initToolbar(toolBar: Toolbar) {
         setSupportActionBar(toolBar)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         toolBar.setNavigationOnClickListener { view -> onBackPressed() }
     }
 
-    fun updateTitle(string: String) {
-        supportActionBar!!.title = string
+    fun setTitle(string: String) {
+        supportActionBar?.title = string
     }
 
-    fun setIsHomeFragment(isHome: Boolean) {
-        if (isHome)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-        else
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
