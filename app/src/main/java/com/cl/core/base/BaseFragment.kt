@@ -37,6 +37,10 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         return fragmentView
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     /**
      * Method to associate the UI and ViewModel
      */

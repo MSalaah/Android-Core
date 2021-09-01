@@ -24,6 +24,11 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     protected abstract fun getFragmentPlaceHolder(): Int
 
+    /**
+     * Method that return the current activity's toolbar
+     *
+     * @return toolbar
+     */
     protected abstract fun getCurrentToolBar(): Toolbar
 
     /**

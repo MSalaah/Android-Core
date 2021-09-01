@@ -40,10 +40,16 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         TODO("Not yet implemented")
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.navigateToHome.observe(this, Observer {
+        viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
             // user is doing login inside home.
         })
+    }
+
+    override fun isTopLevelFragment(): Boolean {
+        TODO("Not yet implemented")
     }
 }

@@ -10,6 +10,7 @@ import com.cl.core.base.BaseViewModel
 import com.cl.core.feature.data.AuthRepoComponent
 import com.cl.core.helpers.LoadingIndicator
 import com.cl.core.helpers.SingleLiveEvent
+import com.cl.core.utils.Constants
 import com.webkeyz.mvp.auth.model.LoginResponse
 import com.webkeyz.mvp.auth.usecase.LoginUseCase
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class LoginViewModel : BaseViewModel() {
 
     private val loginLiveData = MutableLiveData<LoginResponse>()
 
-    @UseCase(R.id.loginUseCase)
+    @UseCase(Constants.UseCase.loginUseCase)
     @Inject
     lateinit var loginUseCase: LoginUseCase
 
