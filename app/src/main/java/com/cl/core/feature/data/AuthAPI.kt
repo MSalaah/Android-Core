@@ -10,5 +10,8 @@ interface AuthAPI {
 
     @POST("login")
     @FormUrlEncoded
-    fun doLogin(@Field("email") email: String?, @Field("password") password: String? ): Observable<LoginResponse?>?
+    fun doLogin(
+        @Field("email") email: String?,
+        @Field("password") password: String?
+    ): Observable<LoginResponse?>?
 }

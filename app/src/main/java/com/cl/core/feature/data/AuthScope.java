@@ -5,9 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
-/**
- * Created by Sara Elmoghazy.
- */
+
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AuthScope {

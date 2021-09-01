@@ -1,4 +1,4 @@
-package com.webkeyz.mvp.auth.view
+package com.cl.core.feature.view
 
 import android.os.Bundle
 import android.view.View
